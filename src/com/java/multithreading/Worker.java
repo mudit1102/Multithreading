@@ -1,16 +1,14 @@
 package com.java.multithreading;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
-public class Worker extends Thread{
+public class Worker implements Callable {
+
   private ArrayList<Integer> list;
 
   Worker(ArrayList<Integer> list) {
     this.list = list;
-  }
-
-  public ArrayList<Integer> getList() {
-    return list;
   }
 
   public void merge(ArrayList<Integer> arrayList, int low, int mid, int high) {
@@ -57,7 +55,9 @@ public class Worker extends Thread{
 
   }
 
-  public void run() {
+  @Override
+  public ArrayList<Integer> call() throws Exception {
     mergeSort(list, 0, list.size() - 1);
+    return list;
   }
 }
