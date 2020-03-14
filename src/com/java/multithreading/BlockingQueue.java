@@ -3,17 +3,17 @@ package com.java.multithreading;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BlockingQueue {
+public final class BlockingQueue<T> {
 
-  private Queue<Integer> queue;
+  private Queue<T> queue;
   private int capacity;
 
   public BlockingQueue(int capacity) {
-    this.queue = new LinkedList<Integer>();
+    this.queue = new LinkedList<T>();
     this.capacity = capacity;
   }
 
-  public synchronized  void enqueue(Integer item){
+  public synchronized  void enqueue(T item){
     while(queue.size() == capacity){
       try {
         wait();
@@ -26,7 +26,7 @@ public class BlockingQueue {
     notify();
   }
 
-  public synchronized Integer  dequeue(){
+  public synchronized T  dequeue(){
     while(queue.size() == 0) {
       try {
         wait();
@@ -34,7 +34,7 @@ public class BlockingQueue {
         e.printStackTrace();
       }
     }
-    Integer item = queue.poll();
+    T item = queue.poll();
     System.out.println("Consumed "+item);
     notify();
     return item;
