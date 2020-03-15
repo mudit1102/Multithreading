@@ -7,18 +7,18 @@ public final class BlockingQueue<T> {
 
   private Queue<T> queue;
   private int capacity;
-  private volatile int size;
+
 
   public BlockingQueue(int capacity) {
     this.queue = new LinkedList<T>();
     this.capacity = capacity;
-    this.size = 0;
+
   }
 
   public void enqueue(T item) {
 
     synchronized (this) {
-      while (size == capacity) {
+      while (queue.size() == capacity) {
         try {
           wait();
         } catch (InterruptedException e) {
@@ -27,28 +27,26 @@ public final class BlockingQueue<T> {
       }
     }
 
-    if (size < capacity) {
-      synchronized (this) {
-        while (size == capacity) {
-          try {
-            wait();
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
+    synchronized (this) {
+      while (queue.size() == capacity) {
+        try {
+          wait();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
         }
-        queue.add(item);
-        System.out.println("Produced item " + item);
-        size++;
-        notify();
       }
+      queue.add(item);
+      System.out.println("Produced item " + item);
+      notifyAll();
     }
+
   }
 
   public T dequeue() {
 
     T item = null;
     synchronized (this) {
-      while (size == 0) {
+      while (queue.size() == 0) {
         try {
           wait();
         } catch (InterruptedException e) {
@@ -57,20 +55,17 @@ public final class BlockingQueue<T> {
       }
     }
 
-    if (size > 0) {
-      synchronized (this) {
-        while (size == 0) {
-          try {
-            wait();
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
+    synchronized (this) {
+      while (queue.size() == 0) {
+        try {
+          wait();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
         }
-        item = queue.poll();
-        System.out.println("Consumed item " + item);
-        size--;
-        notify();
       }
+      item = queue.poll();
+      System.out.println("Consumed item " + item);
+      notifyAll();
     }
 
     return item;
