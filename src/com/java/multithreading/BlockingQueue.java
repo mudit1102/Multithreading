@@ -7,40 +7,76 @@ public final class BlockingQueue<T> {
 
   private Queue<T> queue;
   private int capacity;
+  private volatile int size;
 
   public BlockingQueue(int capacity) {
     this.queue = new LinkedList<T>();
     this.capacity = capacity;
+    this.size = 0;
   }
 
-  public synchronized  void enqueue(T item){
-    while(queue.size() == capacity){
-      try {
-        wait();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+  public void enqueue(T item) {
+
+    synchronized (this) {
+      while (size == capacity) {
+        try {
+          wait();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
     }
-    queue.add(item);
-    System.out.println("Produced "+item);
-    notify();
+
+    if (size < capacity) {
+      synchronized (this) {
+        while (size == capacity) {
+          try {
+            wait();
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        }
+        queue.add(item);
+        System.out.println("Produced item " + item);
+        size++;
+        notify();
+      }
+    }
   }
 
-  public synchronized T  dequeue(){
-    while(queue.size() == 0) {
-      try {
-        wait();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+  public T dequeue() {
+
+    T item = null;
+    synchronized (this) {
+      while (size == 0) {
+        try {
+          wait();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
     }
-    T item = queue.poll();
-    System.out.println("Consumed "+item);
-    notify();
+
+    if (size > 0) {
+      synchronized (this) {
+        while (size == 0) {
+          try {
+            wait();
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        }
+        item = queue.poll();
+        System.out.println("Consumed item " + item);
+        size--;
+        notify();
+      }
+    }
+
     return item;
   }
 
-  public  synchronized boolean isEmpty(){
+  public synchronized boolean isEmpty() {
     return queue.size() == 0;
   }
 }

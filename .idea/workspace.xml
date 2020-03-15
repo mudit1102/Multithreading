@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad568872-76b3-41e6-8683-69f17fc4097e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/java/multithreading/impl/ConsumerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/java/multithreading/impl/ProducerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Multithreading/com/java/multithreading/BlockingQueue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Multithreading/com/java/multithreading/BlockingQueue.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/java/multithreading/BlockingQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/java/multithreading/BlockingQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/java/multithreading/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/java/multithreading/Consumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/java/multithreading/Producer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/java/multithreading/Producer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/java/multithreading/TestBlockingQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/java/multithreading/TestBlockingQueue.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
